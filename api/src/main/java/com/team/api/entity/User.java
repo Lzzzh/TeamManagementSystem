@@ -1,5 +1,9 @@
 package com.team.api.entity;
 
+import com.baomidou.mybatisplus.annotations.TableId;
+import com.baomidou.mybatisplus.annotations.TableName;
+import com.baomidou.mybatisplus.enums.IdType;
+import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -16,9 +20,12 @@ import lombok.NoArgsConstructor;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
+@TableName(value = "user")
+@ApiModel("用户类")
 public class User {
 
   @ApiModelProperty(value = "主键")
+  @TableId(value = "id",type = IdType.AUTO)
   private long id;
 
   @ApiModelProperty(value = "用户标示")
