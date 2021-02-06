@@ -2,9 +2,9 @@ server:
   port: 8091
 eureka:
   client:
-    register-with-eureka: true
-    fetch-registry: true
-    service-url:
+    registerWithEureka: true
+    fetchRegistry: true
+    serviceUrl:
       defaultZone: http://localhost:8761/eureka/
   instance:
     hostname: localhost
@@ -15,4 +15,14 @@ eureka:
 spring:
   application:
     name: api
+  security:
+    user:
+      name: admin
+      password: admin
+  datasource:
+    url: jdbc:mysql://sh-cynosdbmysql-grp-ciph06hq.sql.tencentcdb.com:25696/team?useSSL=false&serverTimezone=GMT%2B8&characterEncoding=utf-8
+    username: root
+    password: Sakura_336
+    driver-class-name: com.mysql.jdbc.Driver
+
 

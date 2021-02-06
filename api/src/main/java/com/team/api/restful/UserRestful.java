@@ -19,18 +19,23 @@ class UserRestful {
 
     @RequestMapping("/login")
     public Result login(@RequestBody User user) {
-        return userService.confirmUser(user)
-                ? new Result(200, "登录成功！", user)
-                : new Result(400, "用户名或密码错误！", "");
+        User userResult = userService.confirmUser(user);
+        return userResult != null
+                ? new Result(200, "登录成功！", userResult)
+                : new Result(500, "用户名或密码错误！", "");
     }
 
     @RequestMapping("/registry")
     public Result registry(@RequestBody User user) {
-        if (!userService.confirmUser(user)) {
-            userService.addUser(user);
-            return new Result(200, "注册成功！", user);
+        User userResult = userService.confirmUser(user);
+        if (userResult == null) {
+            if (userService.addUser(user)) {
+                return new Result(200, "注册成功！", user);
+            }else {
+                return new Result(500, "注册失败!", user);
+            }
         }else {
-            return new Result(400, "注册失败！该用户已存在！", "");
+            return new Result(500, "注册失败！该用户已存在！", userResult);
         }
     }
 }

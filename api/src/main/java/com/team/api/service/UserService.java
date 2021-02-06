@@ -5,7 +5,7 @@ import com.team.api.entity.User;
 
 public interface UserService {
 
-    boolean confirmUser(User user);
+    User confirmUser(User user);
 
     boolean addUser(User user);
 }

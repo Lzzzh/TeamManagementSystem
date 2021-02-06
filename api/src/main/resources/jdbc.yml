@@ -1,0 +1,5 @@
+jdbc:
+  url: jdbc:mysql://sh-cynosdbmysql-grp-ciph06hq.sql.tencentcdb.com:25696/team?serverTimezone=UTC
+  username: root
+  password: Sakura_336
+  driver-class-name: com.mysql.jdbc.Driver
