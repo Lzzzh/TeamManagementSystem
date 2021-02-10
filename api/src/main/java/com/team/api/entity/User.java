@@ -26,7 +26,7 @@ public class User {
 
   @ApiModelProperty(value = "主键")
   @TableId(value = "id",type = IdType.AUTO)
-  private long id;
+  private Integer id;
 
   @ApiModelProperty(value = "用户标示")
   private String userId;
@@ -44,12 +44,11 @@ public class User {
   private String userEmail;
 
   @ApiModelProperty(value = "权限 0为管理员 1为教师 2为学生")
-  private long authority;
+  private Integer authority;
 
   @ApiModelProperty(value = "创建时间")
   private java.sql.Timestamp createTime;
   
   @ApiModelProperty(value = "更新时间")
   private java.sql.Timestamp updateTime;
-
 }
