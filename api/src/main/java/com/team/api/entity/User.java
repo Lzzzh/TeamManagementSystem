@@ -10,12 +10,6 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-/**
- * @author liuzhaohao
- * @date 2021/1/5 10:02
- * @param 
- * @return 
- */
 @Data
 @Builder
 @NoArgsConstructor
@@ -42,6 +36,9 @@ public class User {
 
   @ApiModelProperty(value = "用户邮箱")
   private String userEmail;
+
+  @ApiModelProperty(value = "用户头像")
+  private Object photo;
 
   @ApiModelProperty(value = "权限 0为管理员 1为教师 2为学生")
   private Integer authority;
