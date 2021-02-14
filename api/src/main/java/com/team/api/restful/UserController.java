@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RequestMapping("/api")
 @RestController
-class UserRestful {
+class UserController {
 
     @Autowired
     UserService userService;
