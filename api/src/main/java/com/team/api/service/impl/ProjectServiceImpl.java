@@ -1,16 +1,14 @@
 package com.team.api.service.impl;
 
-import cn.hutool.http.HttpStatus;
-import com.baomidou.mybatisplus.core.conditions.AbstractWrapper;
+import com.baomidou.mybatisplus.core.conditions.Wrapper;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
-import com.baomidou.mybatisplus.extension.api.R;
 import com.team.api.dto.ProjectDto;
 import com.team.api.entity.Project;
 import com.team.api.entity.Result;
-import com.team.api.mapper.ProjectInfoMapper;
+import com.team.api.entity.Selection;
 import com.team.api.mapper.ProjectMapper;
+import com.team.api.mapper.SelectionMapper;
 import com.team.api.service.ProjectService;
-import org.apache.ibatis.annotations.Select;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -24,7 +22,7 @@ public class ProjectServiceImpl implements ProjectService {
     private ProjectMapper projectMapper;
 
     @Autowired
-    private ProjectInfoMapper projectInfoMapper;
+    private SelectionMapper selectionMapper;
 
     @Override
     @Transactional(rollbackFor = Exception.class)
@@ -34,18 +32,23 @@ public class ProjectServiceImpl implements ProjectService {
 
     @Override
     @Transactional(rollbackFor = Exception.class)
-    public boolean deleteProject(Project project) {
-        return (projectMapper.delete(new QueryWrapper<Project>().eq("PROJECT_ID", project.getProjectId())) > 0)
-                && (projectInfoMapper.delete(new QueryWrapper<ProjectDto>().eq("PROJECT_ID", project.getProjectId())) > 0);
+    public boolean deleteProject(ProjectDto projectDto) {
+        return (projectMapper.delete(new QueryWrapper<Project>().eq("PROJECT_ID", projectDto.getProjectId())) > 0)
+                && (selectionMapper.delete(new QueryWrapper<Selection>().eq("PROJECT_ID", projectDto.getProjectId())) > 0);
     }
 
     @Override
-    public Result updateProject(Project project) {
-        return null;
+    public boolean updateProject(Project project) {
+        return projectMapper.update(project, new QueryWrapper<Project>().eq("PROJECT_ID", project.getProjectId())) > 0;
     }
 
     @Override
-    public List<Project> getProjectList(String userId) {
-        return projectMapper.getAllProjectByUserId(userId);
+    public List<Project> getStudentProjectList(String studentId) {
+        return projectMapper.getProjectListByStudentId(studentId);
+    }
+
+    @Override
+    public List<Project> getTeacherProjectList(String teacherId) {
+        return projectMapper.selectList(new QueryWrapper<Project>().eq("TEACHER_ID", teacherId));
     }
 }

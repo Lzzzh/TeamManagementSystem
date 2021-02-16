@@ -8,11 +8,13 @@ import java.util.List;
 
 public interface ProjectService {
 
-    List<Project> getProjectList(String userId);
+    List<Project> getStudentProjectList(String studentId);
+
+    List<Project> getTeacherProjectList(String teacherId);
 
     boolean addProject(Project project);
 
-    boolean deleteProject(Project project);
+    boolean deleteProject(ProjectDto projectDto);
 
-    Result updateProject(Project project);
+    boolean updateProject(Project project);
 }

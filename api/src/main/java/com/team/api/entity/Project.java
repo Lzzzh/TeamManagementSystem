@@ -17,11 +17,11 @@ public class Project {
     @TableId(value = "id",type = IdType.AUTO)
     private Integer id;
 
-    @ApiModelProperty(value = "项目名")
-    private String projectName;
-
     @ApiModelProperty(value = "项目唯一标识")
     private String projectId;
+
+    @ApiModelProperty(value = "项目名")
+    private String projectName;
 
     @ApiModelProperty(value = "项目进度")
     private Integer progress;

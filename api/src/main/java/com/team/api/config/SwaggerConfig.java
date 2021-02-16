@@ -15,20 +15,22 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2;
 @EnableSwagger2
 public class SwaggerConfig {
     @Bean
-    public Docket userApi() {
-        Docket docket = new Docket(DocumentationType.SWAGGER_2)
+    public Docket createRestApi() {
+        return new Docket(DocumentationType.SWAGGER_2)
                 .apiInfo(apiInfo())
                 .select()
-                .apis(RequestHandlerSelectors.basePackage("com.team.api.controller"))//过滤的接口
+                .apis(RequestHandlerSelectors.basePackage("com.team.api"))
                 .paths(PathSelectors.any())
                 .build();
-        return docket;
     }
 
-
     private ApiInfo apiInfo() {
-        return new ApiInfoBuilder().title("eureka服务端提供者接口平台").description("服务相关数据接口")
-                .termsOfServiceUrl("http://www.zhang.box.cn/").contact("技术开发部")
-                .license("Licence Version 1.0").licenseUrl("#").version("1.0").build();
+        return new ApiInfoBuilder()
+                .title("信息学院团队管理系统测试面板")
+                .description("测试面板")
+                .termsOfServiceUrl(" ")
+                .contact("豪哥")
+                .version("1.0")
+                .build();
     }
 }

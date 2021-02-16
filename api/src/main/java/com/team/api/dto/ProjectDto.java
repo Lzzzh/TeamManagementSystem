@@ -10,10 +10,4 @@ public class ProjectDto {
     private String userId;
 
     private String projectId;
-
-    private String projectName;
-
-    private String teacherName;
-
-    private Integer progress;
 }
