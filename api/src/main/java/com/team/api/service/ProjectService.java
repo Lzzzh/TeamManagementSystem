@@ -4,9 +4,15 @@ import com.team.api.dto.ProjectDto;
 import com.team.api.entity.Project;
 import com.team.api.entity.Result;
 
+import java.util.List;
+
 public interface ProjectService {
 
-    Result addProject(Project project);
+    List<Project> getProjectList(String userId);
 
-    Result getProjectList(ProjectDto projectDto);
+    boolean addProject(Project project);
+
+    boolean deleteProject(Project project);
+
+    Result updateProject(Project project);
 }

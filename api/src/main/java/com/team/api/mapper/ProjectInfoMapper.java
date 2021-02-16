@@ -2,6 +2,7 @@ package com.team.api.mapper;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.team.api.dto.ProjectDto;
+import com.team.api.entity.Project;
 import org.apache.ibatis.annotations.Select;
 import org.springframework.stereotype.Repository;
 
@@ -14,5 +15,5 @@ public interface ProjectInfoMapper extends BaseMapper<ProjectDto> {
             "FROM choose c, student s, project p, user u " +
             "WHERE u.USER_ID = #{userId} AND s.STUDENT_ID = u.USER_ID" +
             "AND c.STUDENT_ID = s.STUDENT_ID AND AND p.PROJECT_ID = c.PROJECT_ID")
-    List<ProjectDto> getAllProjectByUserId(ProjectDto projectDto);
+    List<Project> getAllProjectByUserId(ProjectDto projectDto);
 }

@@ -22,7 +22,7 @@ public class User {
   @TableId(value = "id",type = IdType.AUTO)
   private Integer id;
 
-  @ApiModelProperty(value = "用户标示")
+  @ApiModelProperty(value = "用户标识")
   private String userId;
 
   @ApiModelProperty(value = "用户姓名")
@@ -40,7 +40,7 @@ public class User {
   @ApiModelProperty(value = "用户头像")
   private Object photo;
 
-  @ApiModelProperty(value = "权限 0为管理员 1为教师 2为学生")
+  @ApiModelProperty(value = "权限 0为学生 1为教师 2为管理员")
   private Integer authority;
 
   @ApiModelProperty(value = "创建时间")

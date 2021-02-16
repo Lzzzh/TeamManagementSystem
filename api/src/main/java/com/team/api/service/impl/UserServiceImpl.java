@@ -1,5 +1,6 @@
 package com.team.api.service.impl;
 
+import cn.hutool.http.HttpStatus;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.team.api.dto.LoginDto;
 import com.team.api.entity.Result;
@@ -22,10 +23,10 @@ public class UserServiceImpl implements UserService {
     @Override
     public Result confirmUser(LoginDto loginDto){
         if (StringUtils.isEmpty(loginDto.getUserId())) {
-            return new Result(400,"账号不能为空","");
+            return new Result(HttpStatus.HTTP_BAD_REQUEST,"账号不能为空","");
         }
         if (StringUtils.isEmpty(loginDto.getUserPassword())){
-            return new Result(400,"密码不能为空","");
+            return new Result(HttpStatus.HTTP_BAD_REQUEST,"密码不能为空","");
         }
         //通过登录名查询用户
         QueryWrapper<User> wrapper = new QueryWrapper();
@@ -38,9 +39,9 @@ public class UserServiceImpl implements UserService {
                     .userName(user.getUserName())
                     .userPassword(loginDto.getUserPassword())
                     .authority(user.getAuthority()).build();
-            return new Result(200,"",responseDto);
+            return new Result(HttpStatus.HTTP_OK,"",responseDto);
         }
-        return new Result(401,"登录失败","");
+        return new Result(HttpStatus.HTTP_BAD_REQUEST,"登录失败","");
     }
 
     @Override

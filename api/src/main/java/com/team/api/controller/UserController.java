@@ -1,8 +1,7 @@
-package com.team.api.restful;
+package com.team.api.controller;
 
 import com.team.api.dto.LoginDto;
 import com.team.api.entity.Result;
-import com.team.api.entity.User;
 import com.team.api.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;

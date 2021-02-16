@@ -21,7 +21,7 @@ public class Project {
     private String projectName;
 
     @ApiModelProperty(value = "项目唯一标识")
-    private String projectCode;
+    private String projectId;
 
     @ApiModelProperty(value = "项目进度")
     private Integer progress;
