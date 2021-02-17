@@ -11,8 +11,6 @@ import java.util.List;
 @Repository
 public interface ProjectMapper extends BaseMapper<Project> {
 
-    @Select("SELECT p.id, sn.PROJECT_ID, sn.PROJECT_NAME, p.TEACHER_NAME, p.PROGRESS " +
-            "FROM selection sn, student s, project p " +
-            "WHERE s.STUDENT_ID = #{studentId} AND sn.STUDENT_ID = s.STUDENT_ID AND p.PROJECT_ID = sn.PROJECT_ID")
+    @Select("SELECT p.ID, p.PROJECT_ID, p.PROJECT_NAME, p.PROGRESS, p.TEACHER_NAME, p.CREATE_TIME FROM selection sn, student s, project p WHERE s.STUDENT_ID = #{studentId} AND sn.STUDENT_ID = s.STUDENT_ID AND p.PROJECT_ID = sn.PROJECT_ID")
     List<Project> getProjectListByStudentId(String studentId);
 }

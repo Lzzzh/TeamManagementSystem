@@ -6,7 +6,8 @@ import com.baomidou.mybatisplus.enums.IdType;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
-import java.util.List;
+
+import java.sql.Date;
 
 @Data
 @ApiModel("项目")
@@ -28,4 +29,7 @@ public class Project {
 
     @ApiModelProperty(value = "指导老师姓名")
     private String teacherName;
+
+    @ApiModelProperty(value = "立项时间")
+    private Date createTime;
 }

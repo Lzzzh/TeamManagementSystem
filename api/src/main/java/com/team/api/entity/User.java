@@ -42,10 +42,4 @@ public class User {
 
   @ApiModelProperty(value = "权限 0为学生 1为教师 2为管理员")
   private Integer authority;
-
-  @ApiModelProperty(value = "创建时间")
-  private java.sql.Timestamp createTime;
-  
-  @ApiModelProperty(value = "更新时间")
-  private java.sql.Timestamp updateTime;
 }

@@ -5,12 +5,13 @@ import com.team.api.entity.Project;
 import com.team.api.entity.Result;
 import com.team.api.service.ProjectService;
 import io.swagger.annotations.ApiOperation;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-
+@Slf4j
 @RestController
 @RequestMapping("/api")
 public class ProjectController {
@@ -44,6 +45,7 @@ public class ProjectController {
                 return Result.fail("删除失败！", "");
             }
         }catch (Exception e) {
+            log.error("删除失败");
             return Result.fail("删除失败！", "");
         }
     }

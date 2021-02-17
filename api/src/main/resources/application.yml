@@ -24,5 +24,6 @@ spring:
     username: root
     password: Sakura_336
     driver-class-name: com.mysql.jdbc.Driver
-
+    hikari:
+      max-lifetime: 300000
 
