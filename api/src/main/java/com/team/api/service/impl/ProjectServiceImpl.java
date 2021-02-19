@@ -2,6 +2,8 @@ package com.team.api.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.Wrapper;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.team.api.dto.ProjectDto;
 import com.team.api.entity.Project;
 import com.team.api.entity.Result;
@@ -34,9 +36,9 @@ public class ProjectServiceImpl implements ProjectService {
 
     @Override
     @Transactional(rollbackFor = Exception.class)
-    public boolean deleteProject(ProjectDto projectDto) {
-        return (projectMapper.delete(new QueryWrapper<Project>().eq("PROJECT_ID", projectDto.getProjectId())) > 0)
-                && (selectionMapper.delete(new QueryWrapper<Selection>().eq("PROJECT_ID", projectDto.getProjectId())) > 0);
+    public boolean deleteProject(Project project) {
+        return (projectMapper.delete(new QueryWrapper<Project>().eq("PROJECT_ID", project.getProjectId())) > 0)
+                && (selectionMapper.delete(new QueryWrapper<Selection>().eq("PROJECT_ID", project.getProjectId())) > 0);
     }
 
     @Override
@@ -45,12 +47,12 @@ public class ProjectServiceImpl implements ProjectService {
     }
 
     @Override
-    public List<Project> getStudentProjectList(String studentId) {
-        return projectMapper.getProjectListByStudentId(studentId);
+    public IPage<Project> getTeacherProjectList(Page<Project> page, String userId, String searchText) {
+        return projectMapper.getProjectListByTeacherId(page, userId, searchText);
     }
 
     @Override
-    public List<Project> getTeacherProjectList(String teacherId) {
-        return projectMapper.selectList(new QueryWrapper<Project>().eq("TEACHER_ID", teacherId));
+    public IPage<Project> getStudentProjectList(Page<Project> page, String userId, String searchText) {
+        return projectMapper.getProjectListByStudentId(page, userId, searchText);
     }
 }

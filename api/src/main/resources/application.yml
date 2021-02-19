@@ -27,3 +27,6 @@ spring:
     hikari:
       max-lifetime: 300000
 
+mybatis-plus:
+  mapper-locations: mapper/*.xml
+

@@ -9,5 +9,9 @@ public class ProjectDto {
 
     private String userId;
 
-    private String projectId;
+    private String searchText;
+
+    private Integer pageIndex;
+
+    private Integer pageSize;
 }

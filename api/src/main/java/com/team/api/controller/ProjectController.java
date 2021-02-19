@@ -1,11 +1,14 @@
 package com.team.api.controller;
 
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.team.api.dto.ProjectDto;
 import com.team.api.entity.Project;
 import com.team.api.entity.Result;
 import com.team.api.service.ProjectService;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -36,11 +39,11 @@ public class ProjectController {
 
     @ApiOperation("删除项目")
     @RequestMapping(value = "/deleteProject", method = RequestMethod.POST)
-    public Result deleteProject(@RequestBody ProjectDto projectDto) {
+    public Result deleteProject(@RequestBody Project project) {
         try {
-            boolean res = projectService.deleteProject(projectDto);
+            boolean res = projectService.deleteProject(project);
             if (res) {
-                return Result.success("删除成功！", projectDto);
+                return Result.success("删除成功！", project);
             }else {
                 return Result.fail("删除失败！", "");
             }
@@ -62,24 +65,26 @@ public class ProjectController {
     }
 
     @ApiOperation("学生端查询项目列表")
-    @RequestMapping(value = "/studentProjectList", method = RequestMethod.GET)
-    public Result studentProjectList(@RequestParam(value = "studentId") String studentId) {
-        List<Project> projectList = projectService.getStudentProjectList(studentId);
-        if (!projectList.isEmpty()) {
-            return Result.success("查询成功！", projectList);
-        }else {
-            return Result.fail("查询失败！", "");
+    @RequestMapping(value = "/studentProjectList", method = RequestMethod.POST)
+    public Result studentProjectList(@RequestBody ProjectDto projectDto) {
+        if (!StringUtils.isEmpty(projectDto.getSearchText())) {
+             projectDto.setSearchText(projectDto.getSearchText().trim());
         }
+        IPage<Project> projectList = projectService.getStudentProjectList(
+                new Page<>(projectDto.getPageIndex(), projectDto.getPageSize()),
+                projectDto.getUserId(), projectDto.getSearchText());
+        return Result.success("查询成功！", projectList);
     }
 
     @ApiOperation("教师端查询项目列表")
-    @RequestMapping(value = "/teacherProjectList", method = RequestMethod.GET)
-    public Result teacherProjectList(@RequestParam(value = "teacherId") String teacherId) {
-        List<Project> projectList = projectService.getTeacherProjectList(teacherId);
-        if (!projectList.isEmpty()) {
-            return Result.success("查询成功！", projectList);
-        }else {
-            return Result.fail("查询失败！", "");
+    @RequestMapping(value = "/teacherProjectList", method = RequestMethod.POST)
+    public Result teacherProjectList(@RequestBody ProjectDto projectDto) {
+        if (!StringUtils.isEmpty(projectDto.getSearchText())) {
+            projectDto.setSearchText(projectDto.getSearchText().trim());
         }
+        IPage<Project> projectList = projectService.getTeacherProjectList(
+                new Page<>(projectDto.getPageIndex(), projectDto.getPageSize()),
+                projectDto.getUserId(), projectDto.getSearchText());
+        return Result.success("查询成功！", projectList);
     }
 }
