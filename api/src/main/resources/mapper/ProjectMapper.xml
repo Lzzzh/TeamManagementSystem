@@ -3,7 +3,7 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.team.api.mapper.ProjectMapper">
     <select id="getProjectListByStudentId" resultType="com.team.api.entity.Project">
-        SELECT p.ID, p.PROJECT_ID, p.PROJECT_NAME, t.TEACHER_NAME, p.PROGRESS, p.CREATE_TIME
+        SELECT p.ID, p.PROJECT_ID, p.PROJECT_NAME, t.TEACHER_ID, t.TEACHER_NAME, p.PROGRESS, p.CREATE_TIME
         FROM selection sn, student s, project p, teacher t
         WHERE s.STUDENT_ID = #{userId, jdbcType=VARCHAR}
           AND sn.STUDENT_ID = s.STUDENT_ID
@@ -15,12 +15,25 @@
     </select>
 
     <select id="getProjectListByTeacherId" resultType="com.team.api.entity.Project">
-        SELECT p.ID, p.PROJECT_ID, p.PROJECT_NAME, t.TEACHER_NAME, p.PROGRESS, p.CREATE_TIME
+        SELECT p.ID, p.PROJECT_ID, p.PROJECT_NAME, t.TEACHER_ID, t.TEACHER_NAME, p.PROGRESS, p.CREATE_TIME
         FROM project p, teacher t
         WHERE t.TEACHER_ID = #{userId, jdbcType=VARCHAR}
           AND p.TEACHER_ID = t.TEACHER_ID
           <if test="searchText != null and searchText != ''">
               AND p.PROJECT_NAME LIKE CONCAT('%', #{searchText, jdbcType=VARCHAR}, '%')
           </if>
+    </select>
+
+    <select id="getClassList" resultType="java.lang.String">
+        SELECT CLASS_NAME FROM class
+    </select>
+
+    <select id="getStudentListByClass" resultType="com.team.api.dto.StudentDto" parameterType="java.lang.String">
+        SELECT
+        STUDENT_ID AS 'value',
+        STUDENT_NAME AS 'label'
+        FROM student s, class c
+        WHERE s.CLASS_NAME = #{className}
+        AND c.CLASS_NAME = s.CLASS_NAME
     </select>
 </mapper>

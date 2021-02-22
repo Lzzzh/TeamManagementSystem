@@ -1,12 +1,13 @@
 package com.team.api.service.impl;
 
-import com.baomidou.mybatisplus.core.conditions.Wrapper;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.baomidou.mybatisplus.extension.service.IService;
+import com.team.api.dto.ClassDto;
 import com.team.api.dto.ProjectDto;
+import com.team.api.dto.StudentDto;
 import com.team.api.entity.Project;
-import com.team.api.entity.Result;
 import com.team.api.entity.Selection;
 import com.team.api.mapper.ProjectMapper;
 import com.team.api.mapper.SelectionMapper;
@@ -15,8 +16,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.sql.Date;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 @Service
 public class ProjectServiceImpl implements ProjectService {
@@ -27,23 +29,41 @@ public class ProjectServiceImpl implements ProjectService {
     @Autowired
     private SelectionMapper selectionMapper;
 
+
     @Override
     @Transactional(rollbackFor = Exception.class)
-    public boolean addProject(Project project) {
-        project.setCreateTime(new Date(System.currentTimeMillis()));
-        return projectMapper.insert(project) > 0;
+    public boolean addProject(ProjectDto projectDto) {
+        List<Selection> selectionList = new ArrayList<>();
+        for (List<String> list: projectDto.getStudentList()) {
+            Selection selection = new Selection();
+            selection.setStudentId(list.get(1));
+            selection.setProjectId(projectDto.getProject().getProjectId());
+            selectionList.add(selection);
+        }
+        return (projectMapper.insert(projectDto.getProject()) > 0)
+                && (selectionMapper.insertSelections(selectionList) > 0);
     }
 
     @Override
     @Transactional(rollbackFor = Exception.class)
     public boolean deleteProject(Project project) {
-        return (projectMapper.delete(new QueryWrapper<Project>().eq("PROJECT_ID", project.getProjectId())) > 0)
-                && (selectionMapper.delete(new QueryWrapper<Selection>().eq("PROJECT_ID", project.getProjectId())) > 0);
+        return projectMapper.delete(new QueryWrapper<Project>().eq("PROJECT_ID", project.getProjectId())) > 0
+                && selectionMapper.delete(new QueryWrapper<Selection>().eq("PROJECT_ID", project.getProjectId())) > 0;
     }
 
     @Override
-    public boolean updateProject(Project project) {
-        return projectMapper.update(project, new QueryWrapper<Project>().eq("PROJECT_ID", project.getProjectId())) > 0;
+    @Transactional(rollbackFor = Exception.class)
+    public boolean updateProject(ProjectDto projectDto) {
+        List<Selection> selectionList = new ArrayList<>();
+        for (List<String> list: projectDto.getStudentList()) {
+            Selection selection = new Selection();
+            selection.setStudentId(list.get(1));
+            selection.setProjectId(projectDto.getProject().getProjectId());
+            selectionList.add(selection);
+        }
+        return projectMapper.update(projectDto.getProject(), new QueryWrapper<Project>().eq("PROJECT_ID", projectDto.getProject().getProjectId())) > 0
+                && selectionMapper.delete(new QueryWrapper<Selection>().eq("PROJECT_ID", projectDto.getProject().getProjectId())) > 0
+                && selectionMapper.insertSelections(selectionList) > 0;
     }
 
     @Override
@@ -54,5 +74,27 @@ public class ProjectServiceImpl implements ProjectService {
     @Override
     public IPage<Project> getStudentProjectList(Page<Project> page, String userId, String searchText) {
         return projectMapper.getProjectListByStudentId(page, userId, searchText);
+    }
+
+    @Override
+    public List<ClassDto> getStudentList() {
+        List<ClassDto> classDtoList = new ArrayList<>();
+        List<String> classList = projectMapper.getClassList();
+        for (String className: classList) {
+            List<StudentDto> studentList = projectMapper.getStudentListByClass(className);
+            classDtoList.add(new ClassDto(className, className, studentList));
+        }
+        return classDtoList;
+    }
+
+    /* 查询该项目下的学生列表
+     * @author liuzhaohao
+     * @date 2021/2/22 11:34 上午
+     * @param
+     * @return
+     */
+    @Override
+    public List<Map<String, String>> getStudentListByProjectId(String projectId) {
+        return selectionMapper.getStudentListByProjectId(projectId);
     }
 }

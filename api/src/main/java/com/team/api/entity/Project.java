@@ -1,8 +1,8 @@
 package com.team.api.entity;
 
-import com.baomidou.mybatisplus.annotations.TableId;
-import com.baomidou.mybatisplus.annotations.TableName;
-import com.baomidou.mybatisplus.enums.IdType;
+import com.baomidou.mybatisplus.annotation.TableId;
+import com.baomidou.mybatisplus.annotation.TableName;
+import com.baomidou.mybatisplus.annotation.IdType;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
@@ -26,6 +26,9 @@ public class Project {
 
     @ApiModelProperty(value = "项目进度")
     private Integer progress;
+
+    @ApiModelProperty(value = "指导老师ID")
+    private String teacherId;
 
     @ApiModelProperty(value = "指导老师姓名")
     private String teacherName;

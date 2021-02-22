@@ -1,6 +1,5 @@
 package com.team.api.dto;
 
-import com.team.api.entity.Project;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 
@@ -8,9 +7,11 @@ import java.util.List;
 
 @Data
 @AllArgsConstructor
-public class ProjectDto {
+public class ClassDto {
 
-    private Project project;
+    private String label;
 
-    private List<List<String>> studentList;
+    private String value;
+
+    private List<StudentDto> children;
 }

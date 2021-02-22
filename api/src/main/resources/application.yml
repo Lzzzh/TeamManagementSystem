@@ -25,7 +25,9 @@ spring:
     password: Sakura_336
     driver-class-name: com.mysql.jdbc.Driver
     hikari:
-      max-lifetime: 300000
+      max-lifetime: 30000
+      maximum-pool-size: 10
+      minimum-idle: 3
 
 mybatis-plus:
   mapper-locations: mapper/*.xml

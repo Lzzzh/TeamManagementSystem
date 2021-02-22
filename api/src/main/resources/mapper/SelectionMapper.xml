@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.team.api.mapper.SelectionMapper">
+    <insert id="insertSelections" parameterType="java.util.List" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO selection (`ID`, `STUDENT_ID`, `PROJECT_ID`)
+        VALUES
+        <foreach collection="list" item="item" index="index" separator=",">
+            (
+                #{item.id, jdbcType=INTEGER},
+                #{item.studentId, jdbcType=VARCHAR},
+                #{item.projectId, jdbcType=VARCHAR}
+            )
+        </foreach>
+    </insert>
+
+    <select id="getStudentListByProjectId" parameterType="java.lang.String" resultType="Map">
+        SELECT s.STUDENT_ID AS 'studentId',
+               s.STUDENT_NAME AS 'studentName'
+        FROM selection sn, student s
+        WHERE sn.PROJECT_ID = #{projectId, jdbcType=VARCHAR}
+        AND s.STUDENT_ID = sn.STUDENT_ID
+    </select>
+</mapper>
