@@ -24,16 +24,5 @@
           </if>
     </select>
 
-    <select id="getClassList" resultType="java.lang.String">
-        SELECT CLASS_NAME FROM class
-    </select>
 
-    <select id="getStudentListByClass" resultType="com.team.api.dto.StudentDto" parameterType="java.lang.String">
-        SELECT
-        STUDENT_ID AS 'value',
-        STUDENT_NAME AS 'label'
-        FROM student s, class c
-        WHERE s.CLASS_NAME = #{className}
-        AND c.CLASS_NAME = s.CLASS_NAME
-    </select>
 </mapper>

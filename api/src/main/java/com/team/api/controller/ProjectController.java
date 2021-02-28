@@ -3,7 +3,6 @@ package com.team.api.controller;
 import cn.hutool.core.date.DateUtil;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import com.team.api.dto.ClassDto;
 import com.team.api.dto.PageDto;
 import com.team.api.dto.ProjectDto;
 import com.team.api.entity.Project;
@@ -15,15 +14,8 @@ import net.sourceforge.pinyin4j.PinyinHelper;
 import net.sourceforge.pinyin4j.format.HanyuPinyinCaseType;
 import net.sourceforge.pinyin4j.format.HanyuPinyinOutputFormat;
 import net.sourceforge.pinyin4j.format.HanyuPinyinToneType;
-import net.sourceforge.pinyin4j.format.exception.BadHanyuPinyinOutputFormatCombination;
-import org.apache.commons.lang.StringUtils;
-import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-
-import java.sql.Date;
-import java.util.List;
-import java.util.Map;
 
 @Slf4j
 @RestController
@@ -109,17 +101,5 @@ public class ProjectController {
         return Result.success("查询成功！", projectList);
     }
 
-    @ApiOperation("查询学生列表")
-    @RequestMapping(value = "/studentList", method = RequestMethod.GET)
-    public Result studentList(){
-        List<ClassDto> classDtoList = projectService.getStudentList();
-        return Result.success("查询成功！", classDtoList);
-    }
 
-    @ApiOperation("查询项目相关的学生列表")
-    @RequestMapping(value = "/studentListByProject", method = RequestMethod.GET)
-    public Result studentProjectList(@RequestParam(value = "projectId") String projectId){
-        List<Map<String, String>> studentProjectList = projectService.getStudentListByProjectId(projectId);
-        return Result.success("查询成功！", studentProjectList);
-    }
 }

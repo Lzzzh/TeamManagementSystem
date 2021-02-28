@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.team.api.mapper.MessageMapper">
+<!--    获取用户收到的消息-->
+    <select id="getMessageByUserId" resultType="com.team.api.entity.Message" parameterType="java.lang.String">
+        SELECT m.*, u.USER_NAME AS 'senderName'
+        FROM message m, user u
+        WHERE m.RECEIVER_ID = #{userId}
+        AND u.USER_ID = m.RECEIVER_ID
+    </select>
+</mapper>

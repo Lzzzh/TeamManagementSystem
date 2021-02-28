@@ -5,9 +5,9 @@ import lombok.Data;
 
 @Data
 @AllArgsConstructor
-public class StudentDto {
-
-    private String label;
+public class TeacherListDto {
 
     private String value;
+
+    private String label;
 }

@@ -2,16 +2,22 @@ package com.team.api.service.impl;
 
 import cn.hutool.http.HttpStatus;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.team.api.dto.UserListDto;
+import com.team.api.dto.StudentListDto;
 import com.team.api.dto.LoginDto;
+import com.team.api.dto.TeacherListDto;
 import com.team.api.entity.Result;
 import com.team.api.entity.User;
+import com.team.api.mapper.SelectionMapper;
 import com.team.api.mapper.UserMapper;
 import com.team.api.service.UserService;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.Date;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
 
 
 @Service
@@ -19,6 +25,9 @@ public class UserServiceImpl implements UserService {
 
     @Autowired
     private UserMapper userMapper;
+
+    @Autowired
+    private SelectionMapper selectionMapper;
 
     @Override
     public Result confirmUser(LoginDto loginDto){
@@ -45,7 +54,39 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    public boolean updateUser(User user) {
+        return userMapper.update(user, new QueryWrapper<User>().eq("USER_ID", user.getUserId())) > 0;
+    }
+
+    @Override
     public boolean addUser(User user) {
         return userMapper.insert(user) == 1;
+    }
+
+    @Override
+    public List<UserListDto> getStudentList() {
+        List<UserListDto> userList = new ArrayList<>();
+        List<String> classList = userMapper.getClassList();
+        for (String className: classList) {
+            List<StudentListDto> studentList = userMapper.getStudentListByClass(className);
+            userList.add(new UserListDto(className, className, studentList));
+        }
+        return userList;
+    }
+
+    /* 查询该项目下的学生列表
+     * @author liuzhaohao
+     * @date 2021/2/22 11:34 上午
+     * @param
+     * @return
+     */
+    @Override
+    public List<Map<String, String>> getStudentListByProjectId(String projectId) {
+        return selectionMapper.getStudentListByProjectId(projectId);
+    }
+
+    @Override
+    public List<TeacherListDto> getTeacherList() {
+        return userMapper.getTeacherList();
     }
 }

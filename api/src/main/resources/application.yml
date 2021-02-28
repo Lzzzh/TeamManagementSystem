@@ -20,7 +20,7 @@ spring:
       name: admin
       password: admin
   datasource:
-    url: jdbc:mysql://sh-cynosdbmysql-grp-ciph06hq.sql.tencentcdb.com:25696/team?useSSL=false&serverTimezone=GMT%2B8&characterEncoding=utf-8
+    url: jdbc:mysql://sh-cynosdbmysql-grp-ciph06hq.sql.tencentcdb.com:25696/team?useSSL=false&serverTimezone=GMT%2B8&characterEncoding=utf-8&rewriteBatchedStatements=true
     username: root
     password: Sakura_336
     driver-class-name: com.mysql.jdbc.Driver
