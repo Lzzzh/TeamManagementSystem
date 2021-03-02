@@ -3,6 +3,7 @@ package com.team.api.service.impl;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.team.api.dto.ProgressDto;
 import com.team.api.dto.ProjectDto;
 import com.team.api.entity.Project;
 import com.team.api.entity.Selection;
@@ -72,4 +73,13 @@ public class ProjectServiceImpl implements ProjectService {
         return projectMapper.getProjectListByStudentId(page, userId, searchText);
     }
 
+    @Override
+    public List<ProgressDto> getStudentProgress(String userId) {
+        return projectMapper.getStudentProgress(userId);
+    }
+
+    @Override
+    public List<ProgressDto> getTeacherProgress(String userId) {
+        return projectMapper.getTeacherProgress(userId);
+    }
 }

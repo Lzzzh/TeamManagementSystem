@@ -24,5 +24,22 @@
           </if>
     </select>
 
+    <select id="getStudentProgress" resultType="com.team.api.dto.ProgressDto">
+        SELECT p.PROJECT_NAME, p.PROGRESS
+        FROM project p, selection sn
+        WHERE sn.STUDENT_ID = #{userId}
+        AND p.PROJECT_ID = sn.PROJECT_ID
+        ORDER BY p.PROGRESS ASC, p.CREATE_TIME ASC
+        LIMIT 10
+    </select>
+
+    <select id="getTeacherProgress" resultType="com.team.api.dto.ProgressDto">
+        SELECT PROJECT_NAME, PROGRESS
+        FROM project
+        WHERE TEACHER_ID = #{userId}
+        ORDER BY PROGRESS ASC, CREATE_TIME ASC
+        LIMIT 10
+    </select>
+
 
 </mapper>

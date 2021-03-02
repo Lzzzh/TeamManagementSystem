@@ -6,6 +6,7 @@ import com.team.api.dto.TeacherListDto;
 import com.team.api.entity.User;
 import org.springframework.stereotype.Repository;
 
+import java.util.Date;
 import java.util.List;
 
 @Repository
@@ -17,4 +18,6 @@ public interface UserMapper extends BaseMapper<User>{
     List<StudentListDto> getStudentListByClass(String className);
 
     List<TeacherListDto> getTeacherList();
+
+    boolean setLastLoginTime(Date lastLoginTime, String userId);
 }

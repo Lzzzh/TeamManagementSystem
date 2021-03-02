@@ -4,6 +4,7 @@ import cn.hutool.core.date.DateUtil;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.team.api.dto.PageDto;
+import com.team.api.dto.ProgressDto;
 import com.team.api.dto.ProjectDto;
 import com.team.api.entity.Project;
 import com.team.api.entity.Result;
@@ -16,6 +17,8 @@ import net.sourceforge.pinyin4j.format.HanyuPinyinOutputFormat;
 import net.sourceforge.pinyin4j.format.HanyuPinyinToneType;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @Slf4j
 @RestController
@@ -100,6 +103,23 @@ public class ProjectController {
                 pageDto.getUserId(), pageDto.getSearchText());
         return Result.success("查询成功！", projectList);
     }
+
+    @ApiOperation("学生端主页查询项目进度")
+    @RequestMapping(value = "studentProgress", method = RequestMethod.GET)
+    public Result studentProgress(@RequestParam String userId){
+        List<ProgressDto> progressDtoList = projectService.getStudentProgress(userId);
+        return Result.success("查询成功！", progressDtoList);
+    }
+
+    @ApiOperation("教师端主页查询项目进度")
+    @RequestMapping(value = "/teacherProgress", method = RequestMethod.GET)
+    public Result teacherProgress(@RequestParam String userId){
+        List<ProgressDto> progressList = projectService.getTeacherProgress(userId);
+        return Result.success("查询成功！", progressList);
+    }
+
+
+
 
 
 }

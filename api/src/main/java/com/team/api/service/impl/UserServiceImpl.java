@@ -1,5 +1,6 @@
 package com.team.api.service.impl;
 
+import cn.hutool.core.date.DateUtil;
 import cn.hutool.http.HttpStatus;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.team.api.dto.UserListDto;
@@ -43,16 +44,24 @@ public class UserServiceImpl implements UserService {
         User user = userMapper.selectOne(wrapper);
         //比较密码
         if (user != null && user.getUserPassword().equals(loginDto.getUserPassword())){
+            userMapper.setLastLoginTime(DateUtil.parse(DateUtil.today()), loginDto.getUserId());
             LoginDto responseDto = LoginDto.builder()
                     .userId(loginDto.getUserId())
                     .userName(user.getUserName())
                     .userPassword(loginDto.getUserPassword())
-                    .authority(user.getAuthority()).build();
+                    .authority(user.getAuthority())
+                    .lastLoginTime(user.getLastLoginTime()).build();
             return new Result(HttpStatus.HTTP_OK,"",responseDto);
         }
         return new Result(HttpStatus.HTTP_BAD_REQUEST,"登录失败","");
     }
 
+    /** 修改用户信息
+     * @author liuzhaohao
+     * @date 2021/3/1 5:35 下午
+     * @param [user]
+     * @return boolean
+     */
     @Override
     public boolean updateUser(User user) {
         return userMapper.update(user, new QueryWrapper<User>().eq("USER_ID", user.getUserId())) > 0;
@@ -74,17 +83,23 @@ public class UserServiceImpl implements UserService {
         return userList;
     }
 
-    /* 查询该项目下的学生列表
+    /** 查询该项目下的学生列表
      * @author liuzhaohao
-     * @date 2021/2/22 11:34 上午
-     * @param
-     * @return
+     * @date 2021/3/1 5:35 下午
+     * @param [projectId]
+     * @return java.util.List<java.util.Map<java.lang.String,java.lang.String>>
      */
     @Override
     public List<Map<String, String>> getStudentListByProjectId(String projectId) {
         return selectionMapper.getStudentListByProjectId(projectId);
     }
 
+    /** 查询教师列表
+     * @author liuzhaohao
+     * @date 2021/3/1 5:34 下午
+     * @param []
+     * @return java.util.List<com.team.api.dto.TeacherListDto>
+     */
     @Override
     public List<TeacherListDto> getTeacherList() {
         return userMapper.getTeacherList();

@@ -26,4 +26,10 @@
             TEACHER_NAME AS 'label'
         FROM teacher
     </select>
+
+    <update id="setLastLoginTime">
+        UPDATE user
+        SET LAST_LOGIN_TIME = #{lastLoginTime}
+        WHERE USER_ID = #{userId}
+    </update>
 </mapper>
