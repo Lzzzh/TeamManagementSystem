@@ -87,4 +87,10 @@ public class MessageController {
             return Result.fail("删除失败！", "");
         }
     }
+
+    /*@ApiOperation("统计消息总数")
+    @RequestMapping("/messageCount")
+    public Result getMessageCount(@RequestParam String userId) {
+
+    }*/
 }

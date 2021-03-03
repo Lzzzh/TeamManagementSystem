@@ -1,11 +1,12 @@
 package com.team.api.entity;
 
-import com.baomidou.mybatisplus.annotation.IdType;
-import com.baomidou.mybatisplus.annotation.TableId;
-import com.baomidou.mybatisplus.annotation.TableName;
+import com.baomidou.mybatisplus.annotation.*;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
+import lombok.Builder;
 import lombok.Data;
+
+import java.util.Date;
 
 
 @Data
@@ -16,6 +17,9 @@ public class Todo {
     @ApiModelProperty("主键")
     @TableId(value = "id",type = IdType.AUTO)
     private Integer id;
+
+    @ApiModelProperty("唯一标识")
+    private String todoId;
 
     @ApiModelProperty("用户ID")
     private String userId;
