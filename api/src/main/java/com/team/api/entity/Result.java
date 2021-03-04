@@ -13,7 +13,7 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 @AllArgsConstructor
 @ApiModel(value = "统一返回数据格式")
-public class Result {
+public class Result<T> {
 
     @ApiModelProperty("状态码")
     private Integer code;
@@ -22,14 +22,13 @@ public class Result {
     private String message;
 
     @ApiModelProperty("Json数据")
-    private Object data;
+    private T data;
 
-
-    public static Result success(String message, Object data) {
-        return new Result(HttpStatus.HTTP_OK, message, data);
+    public static<T> Result<T> success(String message, T data) {
+        return new Result<>(HttpStatus.HTTP_OK, message, data);
     }
 
-    public static Result fail(String message, Object data) {
-        return new Result(HttpStatus.HTTP_INTERNAL_ERROR, message, data);
+    public static<T> Result<T> fail(String message, T data) {
+        return new Result<>(HttpStatus.HTTP_INTERNAL_ERROR, message, data);
     }
 }

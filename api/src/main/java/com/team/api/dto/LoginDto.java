@@ -17,6 +17,8 @@ public class LoginDto {
 
     private String userPassword;
 
+    private String token;
+
     private Integer authority;
 
     @DateTimeFormat(pattern = "yyyy-MM-dd")

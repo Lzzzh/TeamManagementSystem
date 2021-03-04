@@ -12,6 +12,7 @@ import com.team.api.entity.User;
 import com.team.api.mapper.SelectionMapper;
 import com.team.api.mapper.UserMapper;
 import com.team.api.service.UserService;
+import com.team.api.utils.TokenUtil;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -33,10 +34,10 @@ public class UserServiceImpl implements UserService {
     @Override
     public Result confirmUser(LoginDto loginDto){
         if (StringUtils.isEmpty(loginDto.getUserId())) {
-            return new Result(HttpStatus.HTTP_BAD_REQUEST,"账号不能为空","");
+            return Result.fail("账号不能为空", "");
         }
         if (StringUtils.isEmpty(loginDto.getUserPassword())){
-            return new Result(HttpStatus.HTTP_BAD_REQUEST,"密码不能为空","");
+            return Result.fail("密码不能为空","");
         }
         //通过登录名查询用户
         QueryWrapper<User> wrapper = new QueryWrapper();
@@ -49,11 +50,12 @@ public class UserServiceImpl implements UserService {
                     .userId(loginDto.getUserId())
                     .userName(user.getUserName())
                     .userPassword(loginDto.getUserPassword())
+                    .token(TokenUtil.sign(user))
                     .authority(user.getAuthority())
                     .lastLoginTime(user.getLastLoginTime()).build();
-            return new Result(HttpStatus.HTTP_OK,"",responseDto);
+            return Result.success("登录成功！", responseDto);
         }
-        return new Result(HttpStatus.HTTP_BAD_REQUEST,"登录失败","");
+        return new Result(HttpStatus.HTTP_BAD_REQUEST, "登录失败","");
     }
 
     /** 修改用户信息
