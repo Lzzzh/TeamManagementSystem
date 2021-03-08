@@ -3,6 +3,7 @@ package com.team.api.service.impl;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.team.api.dto.ProgressDto;
 import com.team.api.dto.ProjectDto;
 import com.team.api.entity.Project;
@@ -18,7 +19,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Service
-public class ProjectServiceImpl implements ProjectService {
+public class ProjectServiceImpl extends ServiceImpl<ProjectMapper, Project> implements ProjectService {
 
     @Autowired
     private ProjectMapper projectMapper;
@@ -82,4 +83,15 @@ public class ProjectServiceImpl implements ProjectService {
     public List<ProgressDto> getTeacherProgress(String userId) {
         return projectMapper.getTeacherProgress(userId);
     }
+
+    @Override
+    public List<Project> getWechatStudentProjectList(String userId) {
+        return projectMapper.getWechatProjectListByStudentId(userId);
+    }
+
+    @Override
+    public List<Project> getWechatTeacherProjectList(String userId) {
+        return projectMapper.getWechatProjectListByTeacherId(userId);
+    }
+
 }

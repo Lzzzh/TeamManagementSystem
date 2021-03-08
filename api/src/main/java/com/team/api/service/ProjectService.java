@@ -2,13 +2,14 @@ package com.team.api.service;
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.baomidou.mybatisplus.extension.service.IService;
 import com.team.api.dto.ProgressDto;
 import com.team.api.dto.ProjectDto;
 import com.team.api.entity.Project;
 
 import java.util.List;
 
-public interface ProjectService {
+public interface ProjectService extends IService<Project> {
 
     IPage<Project> getStudentProjectList(Page<Project> page, String userId, String searchText);
 
@@ -23,4 +24,8 @@ public interface ProjectService {
     List<ProgressDto> getStudentProgress(String userId);
 
     List<ProgressDto> getTeacherProgress(String userId);
+
+    List<Project> getWechatStudentProjectList(String userId);
+
+    List<Project> getWechatTeacherProjectList(String userId);
 }

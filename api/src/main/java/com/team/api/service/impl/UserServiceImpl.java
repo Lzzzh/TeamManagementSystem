@@ -13,6 +13,7 @@ import com.team.api.mapper.SelectionMapper;
 import com.team.api.mapper.UserMapper;
 import com.team.api.service.UserService;
 import com.team.api.utils.TokenUtil;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -21,7 +22,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-
+@Slf4j
 @Service
 public class UserServiceImpl implements UserService {
 
@@ -40,7 +41,7 @@ public class UserServiceImpl implements UserService {
             return Result.fail("密码不能为空","");
         }
         //通过登录名查询用户
-        QueryWrapper<User> wrapper = new QueryWrapper();
+        QueryWrapper<User> wrapper = new QueryWrapper<>();
         wrapper.eq("USER_ID", loginDto.getUserId());
         User user = userMapper.selectOne(wrapper);
         //比较密码
@@ -55,7 +56,8 @@ public class UserServiceImpl implements UserService {
                     .lastLoginTime(user.getLastLoginTime()).build();
             return Result.success("登录成功！", responseDto);
         }
-        return new Result(HttpStatus.HTTP_BAD_REQUEST, "登录失败","");
+        log.error("登录校验失败");
+        return Result.fail("登录失败","");
     }
 
     /** 修改用户信息

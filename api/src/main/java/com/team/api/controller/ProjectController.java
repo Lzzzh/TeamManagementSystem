@@ -1,6 +1,7 @@
 package com.team.api.controller;
 
 import cn.hutool.core.date.DateUtil;
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.team.api.dto.PageDto;
@@ -106,20 +107,31 @@ public class ProjectController {
 
     @ApiOperation("学生端主页查询项目进度")
     @RequestMapping(value = "studentProgress", method = RequestMethod.GET)
-    public Result studentProgress(@RequestParam String userId){
+    public Result<List<ProgressDto>> studentProgress(@RequestParam String userId){
         List<ProgressDto> progressDtoList = projectService.getStudentProgress(userId);
         return Result.success("查询成功！", progressDtoList);
     }
 
     @ApiOperation("教师端主页查询项目进度")
     @RequestMapping(value = "/teacherProgress", method = RequestMethod.GET)
-    public Result teacherProgress(@RequestParam String userId){
+    public Result<List<ProgressDto>> teacherProgress(@RequestParam String userId){
         List<ProgressDto> progressList = projectService.getTeacherProgress(userId);
         return Result.success("查询成功！", progressList);
     }
 
+    @ApiOperation("微信端教师查询项目列表")
+    @RequestMapping(value = "/wechatTeacherProjectList", method = RequestMethod.GET)
+    public Result<List<Project>> getWechatTeacherProjectList(String userId) {
+        List<Project> projectList = projectService.getWechatTeacherProjectList(userId);
+        return Result.success("查询成功！", projectList);
+    }
 
-
+    @ApiOperation("微信端学生查询项目列表")
+    @RequestMapping(value = "/wechatStudentProjectList", method = RequestMethod.GET)
+    public Result<List<Project>> getWechatStudentProjectList(String userId) {
+        List<Project> projectList = projectService.getWechatStudentProjectList(userId);
+        return Result.success("查询成功！", projectList);
+    }
 
 
 }

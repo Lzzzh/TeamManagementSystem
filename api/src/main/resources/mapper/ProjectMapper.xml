@@ -41,5 +41,21 @@
         LIMIT 10
     </select>
 
+    <select id="getWechatProjectListByStudentId" resultType="com.team.api.entity.Project">
+        SELECT p.ID, p.PROJECT_ID, p.PROJECT_NAME, t.TEACHER_ID, t.TEACHER_NAME, p.PROGRESS, p.CREATE_TIME
+        FROM selection sn, student s, project p, teacher t
+        WHERE s.STUDENT_ID = #{userId, jdbcType=VARCHAR}
+          AND sn.STUDENT_ID = s.STUDENT_ID
+          AND p.PROJECT_ID = sn.PROJECT_ID
+          AND p.TEACHER_ID = t.TEACHER_ID
+    </select>
+
+    <select id="getWechatProjectListByTeacherId" resultType="com.team.api.entity.Project">
+        SELECT p.ID, p.PROJECT_ID, p.PROJECT_NAME, t.TEACHER_ID, t.TEACHER_NAME, p.PROGRESS, p.CREATE_TIME
+        FROM project p, teacher t
+        WHERE t.TEACHER_ID = #{userId, jdbcType=VARCHAR}
+          AND p.TEACHER_ID = t.TEACHER_ID
+    </select>
+
 
 </mapper>

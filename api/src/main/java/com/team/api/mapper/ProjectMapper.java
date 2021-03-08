@@ -21,4 +21,8 @@ public interface ProjectMapper extends BaseMapper<Project> {
 
     List<ProgressDto> getTeacherProgress(String userId);
 
+    List<Project> getWechatProjectListByStudentId(String userId);
+
+    List<Project> getWechatProjectListByTeacherId(String userId);
+
 }
