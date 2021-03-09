@@ -18,4 +18,6 @@ public class StudentListDto {
     private String label;
 
     private String value;
+
+    private String className;
 }

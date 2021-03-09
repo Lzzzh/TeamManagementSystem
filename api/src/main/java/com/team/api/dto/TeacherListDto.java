@@ -10,4 +10,6 @@ public class TeacherListDto {
     private String value;
 
     private String label;
+
+    private String className;
 }

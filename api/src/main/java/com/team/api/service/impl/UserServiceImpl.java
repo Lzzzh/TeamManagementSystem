@@ -106,6 +106,13 @@ public class UserServiceImpl implements UserService {
      */
     @Override
     public List<TeacherListDto> getTeacherList() {
-        return userMapper.getTeacherList();
+        List<Map<String, String>> mapList = userMapper.getTeacherList();
+        List<TeacherListDto> teacherList = new ArrayList<>();
+        for (Map<String, String> map: mapList) {
+            for (Map.Entry<String, String> e: map.entrySet()) {
+                teacherList.add(new TeacherListDto(e.getKey(), e.getValue(), "老师"));
+            }
+        }
+        return teacherList;
     }
 }

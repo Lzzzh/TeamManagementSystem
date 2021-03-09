@@ -2,6 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.team.api.mapper.UserMapper">
+
     <select id="getUserList" resultType="com.team.api.dto.StudentListDto">
         SELECT USER_ID AS 'value',
                USER_NAME AS 'label' FROM user
@@ -13,17 +14,18 @@
 
     <select id="getStudentListByClass" resultType="com.team.api.dto.StudentListDto" parameterType="java.lang.String">
         SELECT
-            STUDENT_ID AS 'value',
-            STUDENT_NAME AS 'label'
+            s.STUDENT_ID AS 'value',
+            s.STUDENT_NAME AS 'label',
+            c.CLASS_NAME AS 'classname'
         FROM student s, class c
         WHERE s.CLASS_NAME = #{className}
           AND c.CLASS_NAME = s.CLASS_NAME
     </select>
 
-    <select id="getTeacherList" resultType="com.team.api.dto.TeacherListDto">
+    <select id="getTeacherList" resultType="java.util.HashMap">
         SELECT
-            TEACHER_ID AS 'value',
-            TEACHER_NAME AS 'label'
+            TEACHER_ID
+            TEACHER_NAME
         FROM teacher
     </select>
 

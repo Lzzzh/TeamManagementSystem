@@ -8,6 +8,7 @@ import org.springframework.stereotype.Repository;
 
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 @Repository
 public interface UserMapper extends BaseMapper<User>{
@@ -17,7 +18,7 @@ public interface UserMapper extends BaseMapper<User>{
 
     List<StudentListDto> getStudentListByClass(String className);
 
-    List<TeacherListDto> getTeacherList();
+    List<Map<String, String>> getTeacherList();
 
     boolean setLastLoginTime(Date lastLoginTime, String userId);
 }
