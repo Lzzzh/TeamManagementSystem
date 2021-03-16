@@ -22,9 +22,9 @@
           AND c.CLASS_NAME = s.CLASS_NAME
     </select>
 
-    <select id="getTeacherList" resultType="java.util.HashMap">
+    <select id="getTeacherList" resultType="HashMap">
         SELECT
-            TEACHER_ID
+            TEACHER_ID,
             TEACHER_NAME
         FROM teacher
     </select>

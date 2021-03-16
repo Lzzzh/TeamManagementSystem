@@ -9,11 +9,9 @@ import java.util.Date;
 @Data
 public class MessageStatusDto {
 
-    private Integer status;
+    private Integer id;
 
     private String userId;
 
-    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
-    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
-    private Date createTime;
+    private Integer status;
 }

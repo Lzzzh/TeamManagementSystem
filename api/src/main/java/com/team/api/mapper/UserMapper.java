@@ -18,7 +18,7 @@ public interface UserMapper extends BaseMapper<User>{
 
     List<StudentListDto> getStudentListByClass(String className);
 
-    List<Map<String, String>> getTeacherList();
+    List<Map> getTeacherList();
 
     boolean setLastLoginTime(Date lastLoginTime, String userId);
 }

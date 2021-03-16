@@ -22,7 +22,7 @@ public class MessageServiceImpl extends ServiceImpl<MessageMapper, Message> impl
     @Autowired
     private MessageMapper messageMapper;
 
-    /** 设置消息状态
+    /**
      * @author liuzhaohao
      * @date 2021/2/28 4:09 下午
      * @param [messageStatusDto]
@@ -31,10 +31,9 @@ public class MessageServiceImpl extends ServiceImpl<MessageMapper, Message> impl
     @Override
     public boolean setMessageStatus(MessageStatusDto messageStatusDto) {
         Message message = new Message();
+        message.setId(messageStatusDto.getId());
         message.setStatus(messageStatusDto.getStatus());
-        String dateTimeFormat = DateUtil.formatDateTime(messageStatusDto.getCreateTime());
-        String messageId = messageStatusDto.getUserId() + "_" + dateTimeFormat;
-        return messageMapper.update(message, new QueryWrapper<Message>().eq("MESSAGE_ID", messageId)) > 0;
+        return messageMapper.updateById(message) > 0;
     }
 
     @Override

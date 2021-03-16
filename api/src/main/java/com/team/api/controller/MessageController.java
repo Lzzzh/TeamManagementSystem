@@ -30,14 +30,12 @@ public class MessageController {
 
     @ApiOperation("发送消息")
     @RequestMapping("/sendMessage")
-    public Result sendMessage(@RequestBody MessageDto messageDto) {
+    public Result<?> sendMessage(@RequestBody MessageDto messageDto) {
         if (!StringUtils.isEmpty(messageDto.getContent())) {
             Date createTime = DateUtil.date();
             List<Message> messageList = new ArrayList<>();
             for (List<String> userIdMap : messageDto.getReceiverList()) {
                 Message message = new Message();
-                String messageId = userIdMap.get(1) + "_" + DateUtil.now();
-                message.setMessageId(messageId);
                 message.setReceiverId(userIdMap.get(1));
                 message.setSenderId(messageDto.getSenderId());
                 message.setContent(messageDto.getContent());
@@ -59,14 +57,14 @@ public class MessageController {
 
     @ApiOperation("获取消息")
     @RequestMapping("/getMessageList")
-    public Result getMessageList(@RequestParam String userId) {
+    public Result<?> getMessageList(@RequestParam String userId) {
         List<Message> messageList = messageService.getMessageList(userId);
         return Result.success("查询成功！", messageList);
     }
 
     @ApiOperation("修改消息状态")
     @RequestMapping("/setMessageStatus")
-    public Result setMessageStatus(@RequestBody MessageStatusDto messageStatusDto) {
+    public Result<?> setMessageStatus(@RequestBody MessageStatusDto messageStatusDto) {
         boolean res = messageService.setMessageStatus(messageStatusDto);
         if (res) {
             return Result.success("修改成功！", messageStatusDto);
@@ -77,10 +75,8 @@ public class MessageController {
 
     @ApiOperation("删除消息")
     @RequestMapping("/deleteMessage")
-    public Result deleteMessage(@RequestBody MessageStatusDto messageStatusDto) {
-        String dateTimeFormat = DateUtil.formatDateTime(messageStatusDto.getCreateTime());
-        String messageId = messageStatusDto.getUserId() + "_" + dateTimeFormat;
-        boolean res = messageService.remove(new QueryWrapper<Message>().eq("MESSAGE_ID", messageId));
+    public Result<?> deleteMessage(@RequestBody MessageStatusDto messageStatusDto) {
+        boolean res = messageService.remove(new QueryWrapper<Message>().eq("ID", messageStatusDto.getId()));
         if (res) {
             return Result.success("删除成功！", messageStatusDto);
         }else {

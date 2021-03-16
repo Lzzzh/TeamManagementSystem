@@ -7,6 +7,6 @@
         SELECT m.*, u.USER_NAME AS 'senderName'
         FROM message m, user u
         WHERE m.RECEIVER_ID = #{userId}
-        AND u.USER_ID = m.RECEIVER_ID
+        AND u.USER_ID = m.SENDER_ID
     </select>
 </mapper>

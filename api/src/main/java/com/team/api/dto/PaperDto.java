@@ -5,11 +5,11 @@ import lombok.Data;
 
 @Data
 @AllArgsConstructor
-public class TeacherListDto {
+public class PaperDto {
 
-    private String label;
+    private String userId;
 
-    private String value;
+    private Integer pageIndex;
 
-    private String className;
+    private Integer pageSize;
 }

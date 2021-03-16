@@ -1,5 +1,5 @@
 server:
-  port: 8091
+  port: 8093
 eureka:
   client:
     registerWithEureka: true
@@ -14,7 +14,7 @@ eureka:
 
 spring:
   application:
-    name: api
+    name: fileserver
   security:
     user:
       name: admin
@@ -28,10 +28,6 @@ spring:
       max-lifetime: 30000
       maximum-pool-size: 10
       minimum-idle: 3
-
-mybatis-plus:
-  mapper-locations: mapper/*.xml
-
 #feign的配置，连接超时及读取超时配置
 feign:
   client:
@@ -40,10 +36,11 @@ feign:
         connectTimeout: 5000
         readTimeout: 5000
         loggerLevel: basic
-
 hystrix:
   command:
     default:
       execution:
         isolation:
           strategy: SEMAPHORE
+
+paper_path: /Users/haoge/paper/
