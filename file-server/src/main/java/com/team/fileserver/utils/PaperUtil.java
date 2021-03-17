@@ -9,6 +9,7 @@ import org.springframework.web.multipart.MultipartFile;
 import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletResponse;
 import java.io.*;
+import java.nio.charset.StandardCharsets;
 import java.util.List;
 
 @Slf4j
@@ -56,11 +57,11 @@ public class PaperUtil {
             //以字节数组的形式读取文件
             byte[] bytes = FileUtil.readBytes(file);
             // 设置返回内容格式
-            response.setContentType("application/octet-stream");
+            response.setContentType("application/pdf");
             // 把文件名按UTF-8取出并按ISO8859-1编码，保证弹出窗口中的文件名中文不乱码
             // 中文不要太多，最多支持17个中文，因为header有150个字节限制。
             // 这一步一定要在读取文件之后进行，否则文件名会乱码，找不到文件
-            String fileName = new String(paper.getFileName().getBytes("UTF-8"),"ISO8859-1");
+            String fileName = new String(paper.getFileName().getBytes(StandardCharsets.UTF_8),"ISO8859-1");
             // 设置下载弹窗的文件名和格式（文件名要包括名字和文件格式）
             response.setHeader("Content-Disposition", "attachment;filename=" + fileName);
             // 返回数据到输出流对象中
@@ -73,4 +74,17 @@ public class PaperUtil {
         }
     }
 
+    public static boolean deletePaper(String paperPath, Paper paper) {
+        String fileName = paperPath + paper.getUserId() + File.separator + paper.getFileName();
+        File file = new File(fileName);
+        try {
+            if (file.exists()) {
+                FileUtil.del(file);
+            }
+            return true;
+        }catch (Exception e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
 }

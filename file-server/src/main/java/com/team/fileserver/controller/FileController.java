@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletResponse;
+import java.io.File;
 import java.util.List;
 
 @Slf4j
@@ -43,10 +44,20 @@ public class FileController {
         }
     }
 
-    @ApiOperation("下载论文")
+    @ApiOperation("下载/预览论文")
     @RequestMapping(value = "/downloadPaper", method = RequestMethod.POST)
-    public void downLoadPapaer(@RequestBody Paper paper,
+    public void downLoadPaper(@RequestBody Paper paper,
                                     HttpServletResponse response) {
         PaperUtil.downLoadPaper(paperPath, paper, response);
+    }
+
+    @ApiOperation("删除论文")
+    @RequestMapping(value = "/deletePaper", method = RequestMethod.POST)
+    public Result<?> deletePaper(@RequestBody Paper paper) {
+        if (PaperUtil.deletePaper(paperPath, paper) && fileService.deletePaper(paper)) {
+            return Result.success("删除成功！", paper.getFileName());
+        }else {
+            return Result.fail("删除失败！", "");
+        }
     }
 }

@@ -48,6 +48,14 @@ public class PaperController {
         return Result.success("查询成功！", paperList);
     }
 
+    @ApiOperation("删除论文记录")
+    @RequestMapping(value = "/deletePaper", method = RequestMethod.POST)
+    public Boolean deletePaper(@RequestBody Paper paper) {
+        return paperService.remove(new QueryWrapper<Paper>()
+                .eq("USER_ID", paper.getUserId())
+                .eq("FILE_NAME", paper.getFileName()));
+    }
+
 
 }
 
