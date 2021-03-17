@@ -1,5 +1,6 @@
 package com.team.fileserver.controller;
 
+import cn.hutool.core.io.FileUtil;
 import com.team.fileserver.entity.Paper;
 import com.team.fileserver.entity.Result;
 import com.team.fileserver.service.FileService;
@@ -22,6 +23,9 @@ public class FileController {
 
     @Value("${paper_path}")
     private String paperPath;
+
+    @Value("${photo_path}")
+    private String photoPath;
 
     @Autowired
     private FileService fileService;
@@ -60,4 +64,44 @@ public class FileController {
             return Result.fail("删除失败！", "");
         }
     }
+
+    /*@ApiOperation("获取用户头像")
+    @RequestMapping(value = "downloadUserPhoto", method = RequestMethod.GET)*/
+
+    @ApiOperation("上传用户头像")
+    @RequestMapping(value = "/uploadUserPhoto", method = RequestMethod.POST)
+    public Result<?> uploadUserPhoto(@RequestParam(value = "userId") String userId,
+            @RequestParam(value = "file") MultipartFile file) {
+        if (file.isEmpty()) {
+            return Result.fail("文件为空！", "");
+        }
+        // 获取文件全名
+        String fileName = file.getOriginalFilename();
+        log.info("文件路径:" + photoPath + userId);
+        // 解决中文问题,liunx 下中文路径,图片显示问题
+        //fileName = UUID.randomUUID() + suffixName;
+        byte[] bytes;
+        File dir = new File(photoPath + userId);
+        File photoFile = new File(dir, File.separator + fileName);
+        //文件上传-覆盖
+        try {
+            bytes = file.getBytes();
+            // 检测是否存在目录
+            if (!photoFile.getParentFile().exists()) {
+                dir.mkdirs();
+            }
+            if (photoFile.exists()) {
+                File newPhoto = photoFile;
+                FileUtil.del(photoFile);
+                FileUtil.writeBytes(bytes, newPhoto);
+            }else {
+                FileUtil.writeBytes(bytes, photoFile);
+            }
+        } catch (Exception e) {
+            log.error("文件上传错误");
+            return Result.fail("上传失败！", "");
+        }
+        return Result.success("上传成功！", file.getOriginalFilename());
+    }
+
 }

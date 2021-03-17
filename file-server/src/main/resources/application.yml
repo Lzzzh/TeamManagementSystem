@@ -44,3 +44,5 @@ hystrix:
           strategy: SEMAPHORE
 
 paper_path: /Users/haoge/paper/
+
+photo_path: /Users/haoge/photo/

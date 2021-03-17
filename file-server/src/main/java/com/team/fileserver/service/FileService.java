@@ -35,4 +35,33 @@ public interface FileService {
      */
     @RequestMapping(value = "/api/deletePaper", method = RequestMethod.POST)
     boolean deletePaper(@RequestBody Paper paper);
+
+    /** 获取用户头像
+     * @author liuzhaohao
+     * @date 2021/3/17 4:19 下午
+     * @param [userId]
+     * @return java.lang.String
+     */
+    @RequestMapping(value = "/api/getUserPhoto", method = RequestMethod.GET)
+    String getUserPhoto(@RequestParam(value = "userId") String userId);
+
+    /** 修改用户头像
+     * @author liuzhaohao
+     * @date 2021/3/17 4:19 下午
+     * @param [userId, fileName]
+     * @return java.lang.Boolean
+     */
+    @RequestMapping(value = "/api/updateUserPhoto", method = RequestMethod.GET)
+    Boolean updateUserPhoto(@RequestParam(value = "userId") String userId,
+                            @RequestParam(value = "fileName") String fileName);
+
+    /** 插入用户头像记录
+     * @author liuzhaohao
+     * @date 2021/3/17 4:20 下午
+     * @param [userId, fileName]
+     * @return java.lang.Boolean
+     */
+    @RequestMapping(value = "/api/insertUserPhoto", method = RequestMethod.GET)
+    public Boolean insertUserPhoto(@RequestParam(value = "userId") String userId,
+                                   @RequestParam(value = "fileName") String fileName);
 }
