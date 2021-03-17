@@ -21,10 +21,6 @@ public class PaperUtil {
         }
         // 获取文件全名
         String fileName = file.getOriginalFilename();
-        log.info("文件路径:" + paperPath);
-        // 解决中文问题,liunx 下中文路径,图片显示问题
-        //fileName = UUID.randomUUID() + suffixName;
-
         for (String receiverName: receiverList) {
             byte[] bytes;
             File dir = new File(paperPath + receiverName);
@@ -35,6 +31,12 @@ public class PaperUtil {
                 // 检测是否存在目录
                 if (!paperFile.getParentFile().exists()) {
                     dir.mkdirs();
+                }
+                if (paperFile.exists()) {
+                    FileUtil.del(paperFile);
+                    FileUtil.writeBytes(bytes, paperFile);
+                }else {
+                    FileUtil.writeBytes(bytes, paperFile);
                 }
                 FileUtil.writeBytes(bytes, paperFile);
             } catch (Exception e) {

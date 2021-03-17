@@ -10,6 +10,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/api")
 public class PhotoController {
@@ -20,7 +22,12 @@ public class PhotoController {
     @ApiOperation("获取用户头像")
     @RequestMapping(value = "/getUserPhoto", method = RequestMethod.GET)
     public String getUserPhoto(@RequestParam(value = "userId") String userId) {
-        return photoService.getOne(new QueryWrapper<Photo>().eq("USER_ID", userId)).getFileName();
+        Photo photo = photoService.getOne(new QueryWrapper<Photo>().eq("USER_ID", userId));
+        if (photo == null) {
+            return "";
+        }else {
+            return photo.getFileName();
+        }
     }
 
     @ApiOperation("修改用户头像")

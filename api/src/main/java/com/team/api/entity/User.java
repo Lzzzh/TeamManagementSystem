@@ -1,8 +1,6 @@
 package com.team.api.entity;
 
-import com.baomidou.mybatisplus.annotation.TableId;
-import com.baomidou.mybatisplus.annotation.TableName;
-import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.*;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
@@ -32,17 +30,18 @@ public class User {
   @ApiModelProperty(value = "用户姓名")
   private String userName;
 
+
   @ApiModelProperty(value = "用户密码")
+  @TableField(updateStrategy = FieldStrategy.NOT_EMPTY)
   private String userPassword;
 
   @ApiModelProperty(value = "用户电话")
+  @TableField(updateStrategy = FieldStrategy.NOT_EMPTY)
   private String userTel;
 
   @ApiModelProperty(value = "用户邮箱")
+  @TableField(updateStrategy = FieldStrategy.NOT_EMPTY)
   private String userEmail;
-
-  @ApiModelProperty(value = "用户头像")
-  private Object photo;
 
   @ApiModelProperty(value = "权限 0为学生 1为教师 2为管理员")
   private Integer authority;

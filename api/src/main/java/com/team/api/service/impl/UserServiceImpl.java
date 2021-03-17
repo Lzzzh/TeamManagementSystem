@@ -33,7 +33,7 @@ public class UserServiceImpl implements UserService {
     private SelectionMapper selectionMapper;
 
     @Override
-    public Result confirmUser(LoginDto loginDto){
+    public Result<?> confirmUser(LoginDto loginDto){
         if (StringUtils.isEmpty(loginDto.getUserId())) {
             return Result.fail("账号不能为空", "");
         }

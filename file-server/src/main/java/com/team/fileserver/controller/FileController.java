@@ -5,6 +5,7 @@ import com.team.fileserver.entity.Paper;
 import com.team.fileserver.entity.Result;
 import com.team.fileserver.service.FileService;
 import com.team.fileserver.utils.PaperUtil;
+import com.team.fileserver.utils.PhotoUtil;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -65,8 +66,13 @@ public class FileController {
         }
     }
 
-    /*@ApiOperation("获取用户头像")
-    @RequestMapping(value = "downloadUserPhoto", method = RequestMethod.GET)*/
+    @ApiOperation("获取用户头像")
+    @RequestMapping(value = "/getUserPhoto", method = RequestMethod.GET)
+    public void getUserPhoto(@RequestParam("userId") String userId,
+                             HttpServletResponse response) {
+        String fileName = fileService.getUserPhoto(userId);
+        PhotoUtil.downloadUserPhoto(photoPath, userId, fileName, response);
+    }
 
     @ApiOperation("上传用户头像")
     @RequestMapping(value = "/uploadUserPhoto", method = RequestMethod.POST)
@@ -77,31 +83,33 @@ public class FileController {
         }
         // 获取文件全名
         String fileName = file.getOriginalFilename();
-        log.info("文件路径:" + photoPath + userId);
         // 解决中文问题,liunx 下中文路径,图片显示问题
-        //fileName = UUID.randomUUID() + suffixName;
         byte[] bytes;
         File dir = new File(photoPath + userId);
         File photoFile = new File(dir, File.separator + fileName);
         //文件上传-覆盖
+        boolean res;
         try {
             bytes = file.getBytes();
             // 检测是否存在目录
             if (!photoFile.getParentFile().exists()) {
                 dir.mkdirs();
             }
+
             if (photoFile.exists()) {
-                File newPhoto = photoFile;
                 FileUtil.del(photoFile);
-                FileUtil.writeBytes(bytes, newPhoto);
+                FileUtil.writeBytes(bytes, photoFile);
+                res = fileService.updateUserPhoto(userId, file.getOriginalFilename());
             }else {
                 FileUtil.writeBytes(bytes, photoFile);
+                res = fileService.insertUserPhoto(userId, file.getOriginalFilename());
             }
         } catch (Exception e) {
             log.error("文件上传错误");
             return Result.fail("上传失败！", "");
         }
-        return Result.success("上传成功！", file.getOriginalFilename());
+        return res ? Result.success("上传成功！", file.getOriginalFilename()) :
+                Result.fail("上传失败！", "");
     }
 
 }
