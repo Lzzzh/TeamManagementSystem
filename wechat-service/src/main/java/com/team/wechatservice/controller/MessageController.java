@@ -1,6 +1,8 @@
 package com.team.wechatservice.controller;
 
 import cn.hutool.core.date.DateUtil;
+
+
 import com.team.wechatservice.dto.MessageDto;
 import com.team.wechatservice.entity.Message;
 import com.team.wechatservice.entity.Result;
@@ -43,7 +45,7 @@ public class MessageController {
                 message.setStatus(0);
                 messageList.add(message);
             }
-            boolean res = messageService.saveBatch(messageList);
+            boolean res = messageService.sendWechatMessage(messageList);
             if (res) {
                 return Result.success("发送消息成功！", messageDto);
             }else {

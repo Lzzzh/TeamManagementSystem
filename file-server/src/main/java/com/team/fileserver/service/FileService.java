@@ -22,6 +22,7 @@ public interface FileService {
      * @param [fileName, receiverList]
      * @return boolean
      */
+
     @RequestMapping(value = "/api/insertReceiverList", method = RequestMethod.POST)
     boolean insertReceiverList(
             @RequestParam("fileName") String fileName,
@@ -45,23 +46,15 @@ public interface FileService {
     @RequestMapping(value = "/api/getUserPhoto", method = RequestMethod.GET)
     String getUserPhoto(@RequestParam(value = "userId") String userId);
 
-    /** 修改用户头像
+    /** 修改/插入用户头像
      * @author liuzhaohao
      * @date 2021/3/17 4:19 下午
      * @param [userId, fileName]
      * @return java.lang.Boolean
      */
-    @RequestMapping(value = "/api/updateUserPhoto", method = RequestMethod.GET)
-    Boolean updateUserPhoto(@RequestParam(value = "userId") String userId,
+    @RequestMapping(value = "/api/saveOrUpdateUserPhoto", method = RequestMethod.GET)
+    Boolean saveOrUpdateUserPhoto(@RequestParam(value = "userId") String userId,
                             @RequestParam(value = "fileName") String fileName);
 
-    /** 插入用户头像记录
-     * @author liuzhaohao
-     * @date 2021/3/17 4:20 下午
-     * @param [userId, fileName]
-     * @return java.lang.Boolean
-     */
-    @RequestMapping(value = "/api/insertUserPhoto", method = RequestMethod.GET)
-    public Boolean insertUserPhoto(@RequestParam(value = "userId") String userId,
-                                   @RequestParam(value = "fileName") String fileName);
+
 }

@@ -11,10 +11,7 @@ import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -84,9 +81,16 @@ public class MessageController {
         }
     }
 
-    /*@ApiOperation("统计消息总数")
-    @RequestMapping("/messageCount")
-    public Result getMessageCount(@RequestParam String userId) {
+    @ApiOperation("统计消息总数")
+    @RequestMapping(value = "/messageCount")
+    public Result<?> getMessageCount(@RequestParam("userId") String userId) {
+        int count = messageService.count(new QueryWrapper<Message>().eq("RECEIVER_ID", userId));
+        return Result.success("查询成功！", count);
+    }
 
-    }*/
+    @ApiOperation("发送微信消息")
+    @RequestMapping(value = "/sendWechatMessage", method = RequestMethod.POST)
+    public Boolean sendWechatMessage(@RequestBody List<Message> messageList) {
+        return messageService.saveBatch(messageList);
+    }
 }

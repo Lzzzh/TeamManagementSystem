@@ -1,6 +1,7 @@
 package com.team.api.service.impl;
 
 import cn.hutool.core.date.DateUtil;
+import cn.hutool.crypto.SecureUtil;
 import cn.hutool.http.HttpStatus;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.team.api.dto.UserListDto;
@@ -12,6 +13,7 @@ import com.team.api.entity.User;
 import com.team.api.mapper.SelectionMapper;
 import com.team.api.mapper.UserMapper;
 import com.team.api.service.UserService;
+import com.team.api.utils.SecretUtil;
 import com.team.api.utils.TokenUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang.StringUtils;
@@ -45,7 +47,8 @@ public class UserServiceImpl implements UserService {
         wrapper.eq("USER_ID", loginDto.getUserId());
         User user = userMapper.selectOne(wrapper);
         //比较密码
-        if (user != null && user.getUserPassword().equals(loginDto.getUserPassword())){
+        if (user != null && user.getUserPassword().equals(
+                SecureUtil.md5(SecretUtil.desEncrypt(loginDto.getUserPassword())))){
             userMapper.setLastLoginTime(DateUtil.parse(DateUtil.today()), loginDto.getUserId());
             LoginDto responseDto = LoginDto.builder()
                     .userId(loginDto.getUserId())
@@ -68,6 +71,8 @@ public class UserServiceImpl implements UserService {
      */
     @Override
     public boolean updateUser(User user) {
+        String userPassword = SecureUtil.md5(SecretUtil.desEncrypt(user.getUserPassword()));
+        user.setUserPassword(userPassword);
         return userMapper.update(user, new QueryWrapper<User>().eq("USER_ID", user.getUserId())) > 0;
     }
 

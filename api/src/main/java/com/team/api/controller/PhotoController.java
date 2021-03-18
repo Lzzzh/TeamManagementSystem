@@ -30,17 +30,11 @@ public class PhotoController {
         }
     }
 
-    @ApiOperation("修改用户头像")
-    @RequestMapping(value = "/updateUserPhoto", method = RequestMethod.GET)
+    @ApiOperation("修改/插入用户头像")
+    @RequestMapping(value = "/saveOrUpdateUserPhoto", method = RequestMethod.GET)
     public Boolean updateUserPhoto(@RequestParam(value = "userId") String userId,
                                    @RequestParam(value = "fileName") String fileName) {
-        return photoService.update(new Photo(userId, fileName), new QueryWrapper<Photo>().eq("USER_ID", userId));
+        return photoService.saveOrUpdate(new Photo(userId, fileName), new QueryWrapper<Photo>().eq("USER_ID", userId));
     }
 
-    @ApiOperation("插入用户头像记录")
-    @RequestMapping(value = "/insertUserPhoto", method = RequestMethod.GET)
-    public Boolean insertUserPhoto(@RequestParam(value = "userId") String userId,
-                                   @RequestParam(value = "fileName") String fileName) {
-        return photoService.save(new Photo(userId, fileName));
-    }
 }

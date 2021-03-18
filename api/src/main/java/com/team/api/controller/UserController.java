@@ -64,13 +64,9 @@ class UserController {
         }
     }
 
-    // TODO: 2021/2/24 用户头像上传 
-//    Result userPhoto();
-
-    // TODO: 2021/2/24 注册功能
-//    @CrossOrigin
-//    @RequestMapping("/registry")
-//    public Result registry(@RequestBody User user) {
-//
-//    }
+    @ApiOperation("测试Token有效期")
+    @RequestMapping(value = "/testToken", method = RequestMethod.GET)
+    public Result<?> testToken() {
+        return Result.success("测试成功！", 200);
+    }
 }

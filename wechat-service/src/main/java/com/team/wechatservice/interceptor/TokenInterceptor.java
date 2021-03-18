@@ -1,7 +1,7 @@
-package com.team.api.interceptor;
+package com.team.wechatservice.interceptor;
 
 import com.alibaba.fastjson.JSONObject;
-import com.team.api.utils.TokenUtil;
+import com.team.wechatservice.utils.TokenUtil;
 import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.HandlerInterceptor;
 
@@ -31,7 +31,7 @@ public class TokenInterceptor implements HandlerInterceptor {
         try{
             JSONObject json = new JSONObject();
             json.put("msg","token verify fail");
-            json.put("code", 5000);
+            json.put("code","50000");
             response.getWriter().append(json.toJSONString());
             System.out.println("认证失败，未通过拦截器");
         }catch (Exception e){

@@ -31,7 +31,7 @@ public class ProjectController {
 
     @ApiOperation("新增项目")
     @RequestMapping(value = "/addProject", method = RequestMethod.POST)
-    public Result addProject(@RequestBody ProjectDto projectDto) {
+    public Result<?> addProject(@RequestBody ProjectDto projectDto) {
         HanyuPinyinOutputFormat stringFormat = new HanyuPinyinOutputFormat();
         //拼音小写
         stringFormat.setCaseType(HanyuPinyinCaseType.LOWERCASE);
@@ -56,7 +56,7 @@ public class ProjectController {
 
     @ApiOperation("删除项目")
     @RequestMapping(value = "/deleteProject", method = RequestMethod.POST)
-    public Result deleteProject(@RequestBody Project project) {
+    public Result<?> deleteProject(@RequestBody Project project) {
         try {
             boolean res = projectService.deleteProject(project);
             if (res) {
@@ -72,7 +72,7 @@ public class ProjectController {
 
     @ApiOperation("修改项目")
     @RequestMapping(value = "/updateProject", method = RequestMethod.POST)
-    public Result updateProject(@RequestBody ProjectDto projectDto) {
+    public Result<?> updateProject(@RequestBody ProjectDto projectDto) {
         boolean res = projectService.updateProject(projectDto);
         try {
             if (res) {
@@ -89,7 +89,7 @@ public class ProjectController {
 
     @ApiOperation("学生端查询项目列表")
     @RequestMapping(value = "/studentProjectList", method = RequestMethod.POST)
-    public Result studentProjectList(@RequestBody PageDto pageDto) {
+    public Result<?> studentProjectList(@RequestBody PageDto pageDto) {
         IPage<Project> projectList = projectService.getStudentProjectList(
                 new Page<>(pageDto.getPageIndex(), pageDto.getPageSize()),
                 pageDto.getUserId(), pageDto.getSearchText());
@@ -98,7 +98,7 @@ public class ProjectController {
 
     @ApiOperation("教师端查询项目列表")
     @RequestMapping(value = "/teacherProjectList", method = RequestMethod.POST)
-    public Result teacherProjectList(@RequestBody PageDto pageDto) {
+    public Result<?> teacherProjectList(@RequestBody PageDto pageDto) {
         IPage<Project> projectList = projectService.getTeacherProjectList(
                 new Page<>(pageDto.getPageIndex(), pageDto.getPageSize()),
                 pageDto.getUserId(), pageDto.getSearchText());
@@ -132,6 +132,21 @@ public class ProjectController {
         List<Project> projectList = projectService.getWechatStudentProjectList(userId);
         return Result.success("查询成功！", projectList);
     }
+
+    @ApiOperation("教师端统计项目总数")
+    @RequestMapping(value = "/teacherProjectCount", method = RequestMethod.GET)
+    public Result<?> getTeacherProjectCount(@RequestParam("userId") String userId) {
+        int count = projectService.getWechatTeacherProjectList(userId).size();
+        return Result.success("查询成功！", count);
+    }
+
+    @ApiOperation("学生端统计项目总数")
+    @RequestMapping(value = "/studentProjectCount", method = RequestMethod.GET)
+    public Result<?> getStudentProjectCount(@RequestParam("userId") String userId) {
+        int count = projectService.getWechatStudentProjectList(userId).size();
+        return Result.success("查询成功！", count);
+    }
+
 
 
 }

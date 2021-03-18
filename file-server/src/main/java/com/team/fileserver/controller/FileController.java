@@ -95,15 +95,13 @@ public class FileController {
             if (!photoFile.getParentFile().exists()) {
                 dir.mkdirs();
             }
-
             if (photoFile.exists()) {
                 FileUtil.del(photoFile);
                 FileUtil.writeBytes(bytes, photoFile);
-                res = fileService.updateUserPhoto(userId, file.getOriginalFilename());
             }else {
                 FileUtil.writeBytes(bytes, photoFile);
-                res = fileService.insertUserPhoto(userId, file.getOriginalFilename());
             }
+            res = fileService.saveOrUpdateUserPhoto(userId, file.getOriginalFilename());
         } catch (Exception e) {
             log.error("文件上传错误");
             return Result.fail("上传失败！", "");

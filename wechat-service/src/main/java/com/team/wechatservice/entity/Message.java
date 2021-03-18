@@ -1,8 +1,5 @@
 package com.team.wechatservice.entity;
 
-import com.baomidou.mybatisplus.annotation.IdType;
-import com.baomidou.mybatisplus.annotation.TableId;
-import com.baomidou.mybatisplus.annotation.TableName;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
@@ -13,11 +10,9 @@ import java.util.Date;
 
 @Data
 @ApiModel("消息主体")
-@TableName("message")
 public class Message {
 
     @ApiModelProperty("主键")
-    @TableId(value = "id", type = IdType.AUTO)
     private Integer id;
 
     @ApiModelProperty("消息ID")

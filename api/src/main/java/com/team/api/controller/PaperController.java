@@ -56,6 +56,12 @@ public class PaperController {
                 .eq("FILE_NAME", paper.getFileName()));
     }
 
+    @ApiOperation("统计论文记录")
+    @RequestMapping(value = "/paperCount", method = RequestMethod.GET)
+    public Result<?> getPaperCount(@RequestParam(value = "userId") String userId) {
+        int count = paperService.count(new QueryWrapper<Paper>().eq("USER_ID", userId));
+        return Result.success("查询成功！", count);
+    }
 
 }
 
