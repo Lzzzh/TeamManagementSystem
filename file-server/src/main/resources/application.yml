@@ -5,12 +5,13 @@ eureka:
     registerWithEureka: true
     fetchRegistry: true
     serviceUrl:
-      defaultZone: http://localhost:8761/eureka/
+      defaultZone: ${SPRING-CLOUD-EUREKA-ZONE}
   instance:
-    hostname: localhost
+    hostname: 49.234.223.73
     prefer-ip-address: true
     instanceId: ${eureka.instance.hostname}:${server.port}
     status-page-url: http://${eureka.instance.hostname}:${server.port}/swagger-ui.html
+
 
 spring:
   application:
@@ -20,7 +21,7 @@ spring:
       name: admin
       password: admin
   datasource:
-    url: jdbc:mysql://sh-cynosdbmysql-grp-ciph06hq.sql.tencentcdb.com:25696/team?useSSL=false&serverTimezone=GMT%2B8&characterEncoding=utf-8&rewriteBatchedStatements=true
+    url: jdbc:mysql://${SPRING-CLOUD-MYSQL-HOST}/${SPRING-CLOUD-DB-NAME}?useSSL=false&serverTimezone=GMT%2B8&characterEncoding=utf-8&rewriteBatchedStatements=true
     username: root
     password: Sakura_336
     driver-class-name: com.mysql.jdbc.Driver
@@ -43,6 +44,6 @@ hystrix:
         isolation:
           strategy: SEMAPHORE
 
-paper_path: /Users/haoge/paper/
+paper_path: /tmp/paper/
 
-photo_path: /Users/haoge/photo/
+photo_path: /tmp/photo/

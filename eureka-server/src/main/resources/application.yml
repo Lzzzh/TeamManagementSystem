@@ -1,11 +1,9 @@
 eureka:
-  instance:
-    hostname: localhost
   client:
     registerWithEureka: false
     fetchRegistry: false
     service-url:
-      defaultZone: http://${eureka.instance.hostname}:${server.port}/eureka/
+      defaultZone: ${SPRING-CLOUD-EUREKA-ZONE}
 
 spring:
   application:
