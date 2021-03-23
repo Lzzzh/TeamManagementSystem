@@ -5,10 +5,10 @@
     <parent>
         <groupId>com.team</groupId>
         <artifactId>TeamManagementSystem</artifactId>
-        <version>1.0</version>
+        <version>1.0-SNAPSHOT</version>
     </parent>
     <artifactId>wechat-service</artifactId>
-    <version>1.0</version>
+    <version>0.0.1-SNAPSHOT</version>
     <name>wechat-service</name>
     <description>WechatApi</description>
     <properties>
@@ -60,6 +60,6 @@
                 <version>2.3.0.RELEASE</version>
             </plugin>
         </plugins>
-        <finalName>wechat-service</finalName>
     </build>
+
 </project>
