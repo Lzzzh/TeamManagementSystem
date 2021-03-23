@@ -20,7 +20,7 @@ spring:
       name: admin
       password: admin
   datasource:
-    url: jdbc:mysql://sh-cynosdbmysql-grp-ciph06hq.sql.tencentcdb.com:25696/team?useSSL=false&serverTimezone=GMT%2B8&characterEncoding=utf-8&rewriteBatchedStatements=true
+    url: jdbc:mysql://172.17.16.11:3306/team?useSSL=false&serverTimezone=GMT%2B8&characterEncoding=utf-8&rewriteBatchedStatements=true
     username: root
     password: Sakura_336
     driver-class-name: com.mysql.jdbc.Driver
@@ -43,6 +43,6 @@ hystrix:
         isolation:
           strategy: SEMAPHORE
 
-paper_path: /Users/haoge/paper/
+paper_path: /paper/
 
-photo_path: /Users/haoge/photo/
+photo_path: /photo/
