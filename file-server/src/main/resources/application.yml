@@ -28,6 +28,10 @@ spring:
       max-lifetime: 30000
       maximum-pool-size: 10
       minimum-idle: 3
+  servlet:
+    multipart:
+      max-file-size: 10MB
+      max-request-size: 10MB
 #feign的配置，连接超时及读取超时配置
 feign:
   client:
